@@ -60,9 +60,17 @@ namespace TP_POO_bibliotheque
             }
             return listlivredispo;
         }
-        public void ajouterutilisateur(string unnom, string unprenom)
+        public void ajouterutilisateur(string unnom, string unprenom,bool premium)
         {
-            Utilisateurs.Add(new utilisateur(unnom, unprenom));
+            if (premium==true)
+            {
+                Utilisateurs.Add(new UtilisateurPremium(unnom, unprenom));
+            }
+            else
+            {
+                Utilisateurs.Add(new UtilisateurBasique(unnom, unprenom));
+            }
+            //Utilisateurs.Add(new utilisateur(unnom, unprenom));//inutile désormais
         }
         public void deletutilisateur(int id)
         {
@@ -146,14 +154,12 @@ namespace TP_POO_bibliotheque
         public Boolean Maxemprunt(utilisateur unuser)
         {
             int nbempruntsuser = nbempruntuser(unuser);
-            if (nbempruntsuser ==3)
+            if (nbempruntsuser ==unuser.MaxNbEmprunt)//ici on récupère le nombre max de livre que peut empruntée un user en fonction de si il est membre basique ou premium
             {
                 return true;
             }
             else
                 return false;
-            //ce sera ici qu'on vérifie le type de compte de l'user afin de savoir s'il est premium ou pas,
-            //cela ne fait que changer le nb d'emprunt max qu'il peut faire
         }
     }
 }

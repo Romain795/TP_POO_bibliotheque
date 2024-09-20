@@ -6,7 +6,6 @@ using System.Threading.Tasks;
 using TP_POO_bibliotheque;
 
 //rajouter la sécurité sur le code (on ne peut pas supprimer un utilisateur qui à une réservation, et autres sécurité)
-//gérer le système d'emprunt maximum en rajoutant les utilisateurs premiums avec de l'héritage=>ne reste plus qu'à rajouter les premiums et à adapter le système d'emprunt max
 partial class Program
 {
     static void Main()
@@ -16,7 +15,7 @@ partial class Program
         Bibliotheque mabibliotheque = new Bibliotheque();
         while (continuer)
         {
-        //Console.Clear();
+        //Console.Clear(); //à remettre après les tests
         
 
         Console.WriteLine("Bienvenue à la bibliothèque");
@@ -65,7 +64,24 @@ partial class Program
                 string nom = Convert.ToString(Console.ReadLine());
                 Console.WriteLine("Pouvez vous entrez le prénom de l'utilisateur :");
                 string prenom = Convert.ToString(Console.ReadLine());
-                mabibliotheque.ajouterutilisateur(nom, prenom);
+                Console.WriteLine("Choisissez le type d'utilisateur :");
+                Console.WriteLine("1 - Utilisateur Basique");
+                Console.WriteLine("2 - Utilisateur Premium");
+                string choix = Convert.ToString(Console.ReadLine());
+                bool premium = false;
+                    if (choix == "1")
+                    {
+                        premium= false;
+                    }
+                    else if (choix == "2")
+                    {
+                        premium = true;
+                    }
+                    else
+                    {
+                        Console.WriteLine("Choix non valide. Veuillez entrer 1 ou 2.");
+                    }
+                    mabibliotheque.ajouterutilisateur(nom, prenom, premium);
                 break;
             case "d":
                 Console.WriteLine("Entrer le numéro ID de l'utilisateur :");
@@ -76,7 +92,7 @@ partial class Program
                 Console.WriteLine("Voici la liste des utilisateurs :");
                 foreach (var unuser in mabibliotheque.Listdesusers())
                 {
-                    Console.WriteLine($"-{unuser.idutilisateur + unuser.Nom + unuser.prenom}");
+                    Console.WriteLine($"-{unuser.idutilisateur + unuser.Nom + unuser.prenom + unuser.typeutilisateur}");
                 }
                 break;
             case "e":
